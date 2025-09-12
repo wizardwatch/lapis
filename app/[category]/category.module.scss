@@ -1,0 +1,44 @@
+.pageContainer {
+  padding: 1rem;
+}
+
+.noteList {
+  background-color: var(--color-base-200);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.noteListItem {
+  list-style: none;
+}
+
+.noteLink {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  border: 1px solid var(--color-base-300);
+  background-color: var(--color-base-100);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: var(--color-base-200);
+  }
+}
+
+.backLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  box-sizing: border-box;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
