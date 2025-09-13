@@ -1,8 +1,5 @@
-import LoginForm from './LoginForm';
-import { getUsernames } from '../../lib/notes';
+import SignInWithDiscord from './SignInWithDiscord';
 
 export default function LoginPage() {
-  const usernames = getUsernames();
-  return <LoginForm usernames={usernames} />;
+  return <SignInWithDiscord />;
 }
-

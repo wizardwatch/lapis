@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { auth } from "@/auth";
 import { getNotes } from "../../lib/notes";
 import { titleCase } from "../../lib/notes/utils";
 import PageHeader from "../../components/PageHeader";
@@ -8,8 +8,8 @@ export default async function CategoryPage({
   params,
 }: { params: { category: string } } & any) {
   const resolvedParams = await params;
-  const cookieStore = await cookies();
-  const username = cookieStore.get("username")?.value || "";
+  const session = await auth();
+  const username = (session as any)?.player || "";
 
   const category = resolvedParams.category;
 

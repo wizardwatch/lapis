@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { auth } from "@/auth";
 import { getNote } from "../../../lib/notes";
 import { notFound } from "next/navigation";
 import PageHeader from "../../../components/PageHeader";
@@ -10,7 +10,8 @@ export default async function SlugPage({
   params: Promise<{ category: string; slug: string }>;
 }) {
   const resolvedParams = await params;
-  const username = (await cookies()).get("username")?.value;
+  const session = await auth();
+  const username = (session as any)?.player as string | undefined;
   if (!username) {
     notFound();
   }

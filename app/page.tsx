@@ -1,11 +1,11 @@
-import { cookies } from "next/headers";
+import { auth } from "@/auth";
 import { getCategories, getNotes } from "../lib/notes";
 import PageHeader from "../components/PageHeader";
 import HomeClientPage from "./HomeClientPage";
 
 export default async function Home() {
-  const cookieStore = await cookies();
-  const username = cookieStore.get("username")?.value || "";
+  const session = await auth();
+  const username = (session as any)?.player || "";
   const allCategories = getCategories();
   const filteredCategories: string[] = [];
   for (const cat of allCategories) {
