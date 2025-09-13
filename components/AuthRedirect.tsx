@@ -6,17 +6,16 @@ import { useSession } from 'next-auth/react';
 export default function AuthRedirect({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const session = useSession();
+  const { status, data } = useSession();
 
   useEffect(() => {
-    const authed = !!(session.data && (session.data as any).player);
-    if (!authed && pathname !== '/login') {
+    if (status === 'unauthenticated' && pathname !== '/login') {
       router.replace('/login');
     }
-  }, [session.data, pathname, router]);
+  }, [status, pathname, router]);
 
-  const authed = !!(session.data && (session.data as any).player);
-  if (!authed && pathname !== '/login') return null;
+  if (status === 'loading') return null;
+  if (status === 'unauthenticated' && pathname !== '/login') return null;
 
   return children;
 }
