@@ -8,9 +8,9 @@ globalThis.isSpace = (code) => {
   return false;
 };
 import "./globals.scss";
-import { UsernameProvider } from "../components/UsernameContext";
 import Header from "../components/Header";
 import AuthRedirect from "../components/AuthRedirect";
+import Providers from "../components/Providers";
 
 
 export const metadata = {
@@ -26,12 +26,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
       </head>
       <body>
-        <UsernameProvider>
+        <Providers>
           <AuthRedirect>
             <Header />
             {children}
           </AuthRedirect>
-        </UsernameProvider>
+        </Providers>
       </body>
     </html>
   );

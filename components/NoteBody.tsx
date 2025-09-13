@@ -1,5 +1,4 @@
 'use client';
-import { useUsername } from './UsernameContext';
 import styles from './NoteBody.module.scss';
 
 export interface Note {
@@ -9,7 +8,6 @@ export interface Note {
 }
 
 export default function NoteBody({ note }: { note: Note }) {
-  const { username } = useUsername();
   return (
     <div className={styles.card}>
       <div className={styles.cardBody}>
