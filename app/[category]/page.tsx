@@ -24,6 +24,13 @@ export default async function CategoryPage({
         (n.players || []).includes(username),
     );
   }
+  // Sort notes: first by session number if present, then by title with numeric awareness
+  notes.sort((a, b) => {
+    const sa = a.session ?? Number.POSITIVE_INFINITY;
+    const sb = b.session ?? Number.POSITIVE_INFINITY;
+    if (sa !== sb) return sa - sb;
+    return a.title.localeCompare(b.title, undefined, { numeric: true, sensitivity: 'base' });
+  });
   return (
     <div>
       <PageHeader title={titleCase(resolvedParams.category)} />

@@ -28,6 +28,7 @@ export interface Note {
   players: string[];
   category: string;
   image?: string;
+  session?: number | null;
   content: string;
 }
 
@@ -60,12 +61,20 @@ export function getNotes(category: string, currentPlayer: string): Note[] {
       const html = md.render(
         convertStatblocks(replaceElements(content, elements), elements),
       );
+      // Normalize session to a number or null
+      let session: number | null = null;
+      if (typeof data.session === 'number') session = data.session;
+      else if (typeof data.session === 'string') {
+        const n = parseInt(data.session, 10);
+        session = Number.isFinite(n) ? n : null;
+      }
       return {
         slug: slugify(f),
         title: titleCase(data.name || data.title || slugify(f)),
         players: data.players || [], // Use data.players as per GEMINI.md
         image: data.image,
         category,
+        session,
         content: convertLinks(html, linkIndex),
       };
     })
@@ -101,12 +110,20 @@ export function getNote(
   const html = md.render(
     convertStatblocks(replaceElements(content, elements), elements),
   );
+  // Normalize session
+  let session: number | null = null;
+  if (typeof data.session === 'number') session = data.session;
+  else if (typeof data.session === 'string') {
+    const n = parseInt(data.session, 10);
+    session = Number.isFinite(n) ? n : null;
+  }
   return {
     slug,
     title: titleCase(data.name || data.title || slug),
     players: data.players || [], // Use data.players as per GEMINI.md
     image: data.image,
     category,
+    session,
     content: convertLinks(html, linkIndex),
   };
 }
