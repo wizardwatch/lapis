@@ -9,8 +9,15 @@ export function slugify(name: string): string {
 }
 
 export function titleCase(text: string): string {
-  return text
-    .replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, (c) => c.toUpperCase())
-    .trim();
+  // Unicode-aware title casing of words separated by hyphens/underscores/spaces.
+  // Keeps diacritics intact and only uppercases the first code point of each word.
+  const normalized = text.replace(/[-_]+/g, ' ').trim();
+  const words = normalized.split(/\s+/);
+  const cased = words.map((w) => {
+    if (!w) return w;
+    const chars = Array.from(w);
+    const [first, ...rest] = chars;
+    return (first?.toLocaleUpperCase() || '') + rest.join('');
+  });
+  return cased.join(' ');
 }
