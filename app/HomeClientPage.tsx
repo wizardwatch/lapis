@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import MaybeImage from '@/components/MaybeImage';
 import { titleCase } from '../lib/notes/utils';
-import { categoryIconSources } from '@/lib/assets';
+import { categoryIconPath } from '@/lib/assets';
 import styles from './page.module.scss';
 
 interface Note {
@@ -27,7 +27,7 @@ export default function HomeClientPage({ categories }: HomeClientPageProps) {
           <Link key={cat} className={styles.card} href={`/${cat}`}>
             <div className={styles.cardImageWrap}>
               <MaybeImage
-                sources={categoryIconSources(cat)}
+                src={categoryIconPath(cat)}
                 alt=""
                 width={800}
                 height={800}
