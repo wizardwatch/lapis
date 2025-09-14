@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import MaybeImage from "@/components/MaybeImage";
 import { titleCase } from "../../lib/notes/utils";
+import { noteIconSources } from "@/lib/assets";
 import styles from "./category.module.scss";
 
 interface Note {
@@ -22,15 +24,22 @@ export default function CategoryClientPage({
 }) {
   return (
     <div className={styles.pageContainer}>
-      <ul className={styles.noteList}>
+      <div className={styles.grid}>
         {notes.map((n) => (
-          <li key={n.slug} className={styles.noteListItem}>
-            <Link className={styles.noteLink} href={`/${category}/${n.slug}`}>
-              {n.title}
-            </Link>
-          </li>
+          <Link key={n.slug} className={styles.card} href={`/${category}/${n.slug}`}>
+            <div className={styles.cardImageWrap}>
+              <MaybeImage
+                sources={noteIconSources(category, n.slug)}
+                alt=""
+                width={1200}
+                height={1200}
+                className={styles.cardImage}
+              />
+              <div className={styles.cardTitle}>{n.title}</div>
+            </div>
+          </Link>
         ))}
-      </ul>
+      </div>
       <Link href="/" className={styles.backLink}>
         Back
       </Link>

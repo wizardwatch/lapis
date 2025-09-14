@@ -1,36 +1,60 @@
 .pageContainer {
   padding: 1rem;
+  /* Center content and cap width for less clutter on wide screens */
+  max-width: clamp(640px, 85vw, 1200px);
+  margin-inline: auto;
 }
 
-.noteList {
-  background-color: var(--color-base-200);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
   margin-bottom: 1rem;
 }
 
-.noteListItem {
-  list-style: none;
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.noteLink {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  border: 1px solid var(--color-base-300);
-  background-color: var(--color-base-100);
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  color: var(--color-primary);
-  text-decoration: none;
-  box-sizing: border-box;
-
-  &:hover {
-    background-color: var(--color-base-200);
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cardImageWrap {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--color-base-200);
+  aspect-ratio: 1 / 1; /* Responsive square */
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.cardTitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+  color: white;
+  font-weight: 600;
 }
 
 .backLink {
