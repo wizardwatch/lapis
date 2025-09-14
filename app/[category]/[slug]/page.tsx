@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { cookies } from "next/headers";
 import { getNote } from "../../../lib/notes";
 import { notFound } from "next/navigation";
 import PageHeader from "../../../components/PageHeader";
@@ -11,7 +12,9 @@ export default async function SlugPage({
 }) {
   const resolvedParams = await params;
   const session = await auth();
-  const username = (session as any)?.player as string | undefined;
+  const role = (session as any)?.role as string | undefined;
+  const viewAs = (await cookies()).get('viewAs')?.value;
+  const username = (role === 'dm' && viewAs ? viewAs : ((session as any)?.player)) as string | undefined;
   if (!username) {
     notFound();
   }

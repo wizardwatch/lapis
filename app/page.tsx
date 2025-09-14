@@ -1,11 +1,14 @@
 import { auth } from "@/auth";
+import { cookies } from "next/headers";
 import { getCategories, getNotes } from "../lib/notes";
 import PageHeader from "../components/PageHeader";
 import HomeClientPage from "./HomeClientPage";
 
 export default async function Home() {
   const session = await auth();
-  const username = (session as any)?.player || "";
+  const role = (session as any)?.role as string | undefined;
+  const viewAs = (await cookies()).get('viewAs')?.value;
+  const username = role === 'dm' && viewAs ? viewAs : ((session as any)?.player || "");
   const allCategories = getCategories();
   const filteredCategories: string[] = [];
   for (const cat of allCategories) {

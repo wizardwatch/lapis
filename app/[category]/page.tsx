@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { cookies } from "next/headers";
 import { getNotes } from "../../lib/notes";
 import { titleCase } from "../../lib/notes/utils";
 import PageHeader from "../../components/PageHeader";
@@ -9,7 +10,9 @@ export default async function CategoryPage({
 }: { params: { category: string } } & any) {
   const resolvedParams = await params;
   const session = await auth();
-  const username = (session as any)?.player || "";
+  const role = (session as any)?.role as string | undefined;
+  const viewAs = (await cookies()).get('viewAs')?.value;
+  const username = role === 'dm' && viewAs ? viewAs : ((session as any)?.player || "");
 
   const category = resolvedParams.category;
 

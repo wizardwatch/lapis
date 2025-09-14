@@ -5,10 +5,12 @@ import { useSession, signOut } from 'next-auth/react';
 import * as Ariakit from "@ariakit/react";
 import styles from "./Header.module.scss";
 import ThemeToggle from "./ThemeToggle";
+import ViewAsSelector from "./ViewAsSelector";
 
 export default function Header() {
   const session = useSession();
   const player = (session.data as any)?.player as string | undefined;
+  const role = (session.data as any)?.role as string | undefined;
 
   return (
     <header className={styles.header}>
@@ -18,6 +20,11 @@ export default function Header() {
           {player ? `Logged in as ${player}` : "Not logged in"}
         </span>
         <ThemeToggle />
+        {role === 'dm' && (
+          <div style={{ marginLeft: '0.5rem' }}>
+            <ViewAsSelector />
+          </div>
+        )}
         {player ? (
           <Ariakit.Button
             onClick={() => {
