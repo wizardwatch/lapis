@@ -1,4 +1,3 @@
-import { NextRequest } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -46,8 +45,9 @@ async function readFileHeaders(filePath: string) {
   } as Record<string, string>;
 }
 
-export async function GET(_req: NextRequest, ctx: { params: { path: string[] } }) {
-  const filePath = resolveSafePath(ctx.params?.path);
+export async function GET(_req: Request, ctx: { params: Promise<{ path: string[] }> }) {
+  const { path: segments } = await ctx.params;
+  const filePath = resolveSafePath(segments);
   if (!filePath) return new Response('Forbidden', { status: 403 });
   try {
     const data = await fs.readFile(filePath);
@@ -58,8 +58,9 @@ export async function GET(_req: NextRequest, ctx: { params: { path: string[] } }
   }
 }
 
-export async function HEAD(_req: NextRequest, ctx: { params: { path: string[] } }) {
-  const filePath = resolveSafePath(ctx.params?.path);
+export async function HEAD(_req: Request, ctx: { params: Promise<{ path: string[] }> }) {
+  const { path: segments } = await ctx.params;
+  const filePath = resolveSafePath(segments);
   if (!filePath) return new Response(null, { status: 403 });
   try {
     await fs.access(filePath);
